@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from Owner.models import Pizza
 
-# Create your views here.
+
+def chef_dashboard(request):
+    pizzas = Pizza.objects.all()
+    return render(request, 'chef_dashboard.html', {'pizzas': pizzas})

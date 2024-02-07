@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.update-form').hide();
+            $('.update-btn').click(function() {
+                var toppingId = $(this).data('id');
+                $('#update-form-' + toppingId).toggle();
+            });
+
+            $('.submit-update').click(function() {
+                var toppingId = $(this).data('id');
+                var newName = $('#update-input-' + toppingId).val();
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'update_topping' 0 %}".replace('0', toppingId),
+                    data: {
+                        'name': newName,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        window.location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Owner Dashboard</h1>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+    <h2>Toppings</h2>
+    <ul>
+        {% for topping in toppings %}
+            <li>
+                <strong>{{ topping.name }}</strong> -
+                <button class="update-btn" data-id="{{ topping.id }}">Update</button>
+                <form method="post" action="{% url 'delete_topping' topping.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+                <div class="update-form" id="update-form-{{ topping.id }}">
+                    <input type="text" id="update-input-{{ topping.id }}" value="{{ topping.name }}">
+                    <button class="submit-update" data-id="{{ topping.id }}">Submit</button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <h3>Add Topping</h3>
+    <form method="post" action="{% url 'add_topping' %}">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Enter a topping">
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
