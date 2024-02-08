@@ -2,17 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chef Dashboard</title>
 </head>
 <body>
-    <h1>Welcome Chef!</h1>
-    <h2>List of Pizzas:</h2>
+    <h1>Chef Dashboard</h1>
+    <h2>Pizzas</h2>
     <ul>
         {% for pizza in pizzas %}
-            <li>{{ pizza.name }}</li>
+            <li>
+                <strong>{{ pizza.name }}</strong> - Toppings: {{ pizza.toppings.all|join:", " }}
+                <!-- Update form -->
+               <form method="post" action="{% url 'update_pizza' pizza.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="name" value="{{ pizza.name }}">
+                    <input type="hidden" name="original_name" value="{{ pizza.name }}">
+                    {% for topping in all_toppings %}
+                        <input type="checkbox" name="toppings" value="{{ topping.id }}"
+                            {% if topping in pizza.toppings.all %} checked {% endif %}>
+                        {{ topping.name }}<br>
+                    {% endfor %}
+                    <button type="submit">Update</button>
+                </form>
+
+                <form method="post" action="{% url 'delete_pizza' pizza.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Delete Pizza</button>
+                </form>
+            </li>
         {% endfor %}
     </ul>
-    <!-- Add more chef-specific functionalities here -->
+    <h3>Create Pizza</h3>
+    <form method="post" action="{% url 'create_pizza' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>
 </body>
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Pizza</title>
+</head>
+<body>
+    <h1>Update Pizza</h1>
+    <form method="post">
+      {% csrf_token %}
+
+      <label for="id_name">Pizza Name:</label><br>
+      <input type="text" id="id_name" name="name" value="{{ pizza.name }}"><br><br>
+
+      <h3>Available Toppings:</h3>
+      {% for topping in available_toppings %}
+        <input type="checkbox" name="toppings" value="{{ topping.id }}" {% if topping in selected_toppings %}checked{% endif %}>
+        <label>{{ topping.name }}</label><br>
+      {% endfor %}
+
+      <button type="submit">Update Pizza</button>
+    </form>
+</body>
+</html>
