@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Owner',
     'Chef',
+    'bootstrap5',
 ]
 
 # Add authentication backends
