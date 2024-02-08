@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from Owner.models import Topping, Pizza
 from .forms import PizzaForm
+from django.contrib.auth.decorators import login_required
+from .decorators import chef_required
 
 
+@chef_required
+@login_required
 def chef_dashboard(request):
     pizzas = Pizza.objects.all()
     return render(request, 'chef_dashboard.html', {'pizzas': pizzas})
