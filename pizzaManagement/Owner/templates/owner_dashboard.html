@@ -33,6 +33,7 @@
 <body>
     </div>
     <h1>Owner Dashboard</h1>
+    <a href="{% url 'logout' %}">Logout</a>
     {% if error_message %}
         <p>{{ error_message }}</p>
     {% endif %}

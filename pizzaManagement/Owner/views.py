@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Topping
 from .forms import ToppingForm
+from django.contrib.auth.decorators import login_required
+from .decorators import owner_required
 
 
+@owner_required
+@login_required
 def owner_dashboard(request):
     if request.method == 'POST':
         form = ToppingForm(request.POST)
