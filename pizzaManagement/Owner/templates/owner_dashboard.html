@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Owner Dashboard</title>
@@ -29,36 +32,170 @@
             });
         });
     </script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS styles */
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+
+        .navbar {
+            background-color: #111B27; /* Dark Blue */
+            padding-top: 1px; /* Reduce space above navbar */
+            padding-bottom: 1px; /* Reduce space below navbar */
+        }
+
+        .navbar-brand {
+            color: #fff; /* White text */
+        }
+
+        .navbar-brand:hover {
+            color: #fff; /* White text on hover */
+        }
+
+        .container {
+            margin-top: 50px; /* Add some top margin */
+        }
+
+        .topping-card {
+            background-color: #ffffff; /* White background */
+            border: 1px solid #dee2e6; /* Light gray border */
+            border-radius: 10px; /* Rounded corners */
+            margin-bottom: 20px; /* Bottom margin */
+        }
+
+        .topping-card-body {
+            padding: 20px; /* Padding inside the card */
+        }
+
+        .update-form {
+            margin-top: 10px; /* Top margin for update form */
+        }
+
+        /* Adjusted button styles */
+        .update-btn,
+        .submit-update {
+            font-size: 14px; /* Smaller font size */
+            padding: 5px 10px; /* Padding */
+            margin-right: 5px; /* Right margin */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .update-btn {
+            background-color: #cfe7cf; /* Light pastel green */
+            border-color: #66cc99; /* Darker green border */
+            color: #212529; /* Dark gray */
+        }
+
+        .update-btn:hover {
+            background-color: #00b33c; /* Darker green on hover */
+            border-color: #00b33c; /* Darker green border on hover */
+        }
+
+        .delete-btn {
+            background-color: #f8d7da; /* Light pastel red */
+            border-color: #e06666; /* Darker red border */
+            color: #212529; /* Dark gray */
+        }
+
+        .delete-btn:hover {
+            background-color: #ff1a1a; /* Red color on hover */
+            border-color: #ff1a1a; /* Red border on hover */
+        }
+
+        /* Flex container for buttons */
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center the buttons horizontally */
+            gap: 10px; /* Add space between buttons */
+        }
+
+        /* Center and add padding to add topping form container */
+        .add-topping-form-container {
+            width: 50%; /* Set width */
+            margin: 0 auto; /* Center horizontally */
+            border: 1px solid #ced4da; /* Light gray border */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Padding */
+            margin-top: 50px; /* Top margin */
+            margin-bottom: 50px; /* Bottom margin */
+        }
+    </style>
 </head>
+
 <body>
-    </div>
-    <h1>Owner Dashboard</h1>
-    <a href="{% url 'logout' %}">Logout</a>
-    {% if error_message %}
-        <p>{{ error_message }}</p>
-    {% endif %}
-    <h2>Toppings</h2>
-    <ul>
-        {% for topping in toppings %}
-            <li>
-                <strong>{{ topping.name }}</strong> -
-                <button class="update-btn" data-id="{{ topping.id }}">Update</button>
-                <form method="post" action="{% url 'delete_topping' topping.id %}">
-                    {% csrf_token %}
-                    <button type="submit">Delete</button>
-                </form>
-                <div class="update-form" id="update-form-{{ topping.id }}">
-                    <input type="text" id="update-input-{{ topping.id }}" value="{{ topping.name }}">
-                    <button class="submit-update" data-id="{{ topping.id }}">Submit</button>
+    {% block content %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand me-auto" href="#">
+				<img src="{% static 'images/supreme_slices_logo.png' %}"  alt="Supreme Slices logo of a pizza with a crown and sunglasses" width="80" height="80">
+			</a>
+            <!-- Home button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                       <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome, Owner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="mt-5 mb-4">Owner Dashboard</h1>
+        {% if error_message %}
+        <p class="alert alert-danger">{{ error_message }}</p>
+        {% endif %}
+        <h2>Currently Available Toppings</h2>
+        <div class="row">
+            {% for topping in toppings %}
+            <div class="col-md-4">
+                <div class="topping-card">
+                    <div class="topping-card-body">
+                        <h5 class="card-title">{{ topping.name }}</h5>
+                        <div class="button-container">
+                            <button class="btn btn-sm btn-primary update-btn" data-id="{{ topping.id }}">Update</button>
+                            <form method="post" action="{% url 'delete_topping' topping.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger delete-btn">Delete</button>
+                            </form>
+                        </div>
+                        <div class="update-form" id="update-form-{{ topping.id }}">
+                            <input type="text" class="form-control" id="update-input-{{ topping.id }}" value="{{ topping.name }}">
+                            <button class="btn btn-sm btn-success submit-update" data-id="{{ topping.id }}">Submit</button>
+                        </div>
+                    </div>
                 </div>
-            </li>
-        {% endfor %}
-    </ul>
-    <h3>Add Topping</h3>
-    <form method="post" action="{% url 'add_topping' %}">
-        {% csrf_token %}
-        <input type="text" name="name" placeholder="Enter a topping">
-        <button type="submit">Add</button>
-    </form>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="add-topping-form-container">
+            <h3>Add a New Topping</h3>
+            <form method="post" action="{% url 'add_topping' %}" class="add-topping-form">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="name" placeholder="Enter a topping">
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-..." crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"
+        integrity="sha384-..." crossorigin="anonymous"></script>
 </body>
+{% endblock %}
 </html>
