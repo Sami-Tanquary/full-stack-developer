@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>Owner Dashboard</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Update topping script -->
     <script>
         $(document).ready(function() {
             $('.update-form').hide();
@@ -34,94 +35,8 @@
     </script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Custom CSS styles */
-        body {
-            background-color: #f8f9fa; /* Light gray background */
-        }
-
-        .navbar {
-            background-color: #111B27; /* Dark Blue */
-            padding-top: 1px; /* Reduce space above navbar */
-            padding-bottom: 1px; /* Reduce space below navbar */
-        }
-
-        .navbar-brand {
-            color: #fff; /* White text */
-        }
-
-        .navbar-brand:hover {
-            color: #fff; /* White text on hover */
-        }
-
-        .container {
-            margin-top: 50px; /* Add some top margin */
-        }
-
-        .topping-card {
-            background-color: #ffffff; /* White background */
-            border: 1px solid #dee2e6; /* Light gray border */
-            border-radius: 10px; /* Rounded corners */
-            margin-bottom: 20px; /* Bottom margin */
-        }
-
-        .topping-card-body {
-            padding: 20px; /* Padding inside the card */
-        }
-
-        .update-form {
-            margin-top: 10px; /* Top margin for update form */
-        }
-
-        /* Adjusted button styles */
-        .update-btn,
-        .submit-update {
-            font-size: 14px; /* Smaller font size */
-            padding: 5px 10px; /* Padding */
-            margin-right: 5px; /* Right margin */
-            border-radius: 5px; /* Rounded corners */
-        }
-
-        .update-btn {
-            background-color: #cfe7cf; /* Light pastel green */
-            border-color: #66cc99; /* Darker green border */
-            color: #212529; /* Dark gray */
-        }
-
-        .update-btn:hover {
-            background-color: #00b33c; /* Darker green on hover */
-            border-color: #00b33c; /* Darker green border on hover */
-        }
-
-        .delete-btn {
-            background-color: #f8d7da; /* Light pastel red */
-            border-color: #e06666; /* Darker red border */
-            color: #212529; /* Dark gray */
-        }
-
-        .delete-btn:hover {
-            background-color: #ff1a1a; /* Red color on hover */
-            border-color: #ff1a1a; /* Red border on hover */
-        }
-
-        /* Flex container for buttons */
-        .button-container {
-            display: flex;
-            justify-content: center; /* Center the buttons horizontally */
-            gap: 10px; /* Add space between buttons */
-        }
-
-        /* Center and add padding to add topping form container */
-        .add-topping-form-container {
-            width: 50%; /* Set width */
-            margin: 0 auto; /* Center horizontally */
-            border: 1px solid #ced4da; /* Light gray border */
-            border-radius: 10px; /* Rounded corners */
-            padding: 20px; /* Padding */
-            margin-top: 50px; /* Top margin */
-            margin-bottom: 50px; /* Bottom margin */
-        }
-    </style>
+    <!-- Owner Dashboard CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owner_dashboard.css' %}">
 </head>
 
 <body>
@@ -132,7 +47,6 @@
             <a class="navbar-brand me-auto" href="#">
 				<img src="{% static 'images/supreme_slices_logo.png' %}"  alt="Supreme Slices logo of a pizza with a crown and sunglasses" width="80" height="80">
 			</a>
-            <!-- Home button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -157,6 +71,7 @@
         <p class="alert alert-danger">{{ error_message }}</p>
         {% endif %}
         <h2>Currently Available Toppings</h2>
+        <!-- Loop through all available toppings and put in individual cards -->
         <div class="row">
             {% for topping in toppings %}
             <div class="col-md-4">
@@ -179,6 +94,7 @@
             </div>
             {% endfor %}
         </div>
+        <!-- Add new topping form -->
         <div class="add-topping-form-container">
             <h3>Add a New Topping</h3>
             <form method="post" action="{% url 'add_topping' %}" class="add-topping-form">

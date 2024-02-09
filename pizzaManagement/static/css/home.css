@@ -1,0 +1,39 @@
+/* Home Page CSS  */
+        body {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+
+        .navbar {
+            background-color: #111B27; /* Dark Blue */
+            padding-top: 1px; /* Reduce space above navbar */
+            padding-bottom: 1px; /* Reduce space below navbar */
+        }
+
+        .navbar-brand {
+            color: #fff; /* White text */
+        }
+
+        .navbar-brand:hover {
+            color: #fff; /* White text on hover */
+        }
+
+        .welcome-header {
+            margin-top: 50px; /* Add some top margin */
+        }
+
+        .custom-alert {
+            background-color: #FFDAB9; /* Light red color */
+            color: #000000; /* White text color */
+            border-color: #F24E33; /* Border color */
+        }
+
+        .custom-btn {
+            background-color: #FFDAB9; /* Light red color */
+            color: #000000; /* White text color */
+            border-color: #F24E33; /* Border color */
+        }
+
+        .custom-btn:hover {
+            background-color: #F24E33; /* Red color */
+            border-color: #FF6347;
+        }
