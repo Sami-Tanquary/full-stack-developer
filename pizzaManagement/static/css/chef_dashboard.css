@@ -86,7 +86,7 @@
         margin-bottom: 10px; /* Add space below the toppings title */
     }
 
-        /* Center the pizza name */
+    /* Center the pizza name */
     .card-title {
         text-align: center;
     }
