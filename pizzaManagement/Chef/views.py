@@ -4,24 +4,47 @@ from .forms import PizzaForm
 from django.contrib.auth.decorators import login_required
 from .decorators import chef_required
 
-
 @chef_required
 @login_required
 def chef_dashboard(request):
-    pizzas = Pizza.objects.all()
-    return render(request, 'chef_dashboard.html', {'pizzas': pizzas})
-
-
-def create_pizza(request):
+    error_message = None
     if request.method == 'POST':
         form = PizzaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('chef_dashboard')
+            name = form.cleaned_data['name']
+            if Pizza.objects.filter(name=name).exists():
+                error_message = "A pizza with this name already exists!"
+            else:
+                form.save()
+                return redirect('chef_dashboard')
     else:
         form = PizzaForm()
-    return render(request, 'chef_dashboard.html', {'form': form})
 
+    pizzas = Pizza.objects.all()
+
+    return render(request, 'chef_dashboard.html', {'pizzas': pizzas, 'form': form, 'all_toppings': Topping.objects.all(),
+                                                   'error_message': error_message})
+
+def create_pizza(request):
+    error_message = None
+    if request.method == 'POST':
+        form = PizzaForm(request.POST)
+        if form.is_valid():
+            name = form.clean_name()
+            if Pizza.objects.filter(name=name).exists():
+                error_message = "A pizza with this name already exists!"
+            else:
+                form.save()
+                return redirect('chef_dashboard')
+        else:
+            error_message = "A pizza with this name already exists!"
+    else:
+        form = PizzaForm()
+
+    pizzas = Pizza.objects.all()
+
+    return render(request, 'chef_dashboard.html', {'pizzas': pizzas, 'form': form, 'all_toppings': Topping.objects.all(),
+                                                   'error_message': error_message})
 
 def delete_pizza(request, pizza_id):
     pizza = get_object_or_404(Pizza, pk=pizza_id)
@@ -37,11 +60,9 @@ def update_pizza(request, pizza_id):
     if request.method == 'POST':
         form = PizzaForm(request.POST, instance=pizza)
         if form.is_valid():
-            # Save the form to update the pizza instance with the new toppings
             form.save()
             return redirect('chef_dashboard')
     else:
-        # Pass the form to the template
         form = PizzaForm(instance=pizza)
 
     context = {

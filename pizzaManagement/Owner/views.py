@@ -8,23 +8,25 @@ from .decorators import owner_required
 @owner_required
 @login_required
 def owner_dashboard(request):
+    error_message = None
     if request.method == 'POST':
         form = ToppingForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
             if Topping.objects.filter(name=name).exists():
-                # Topping with the same name already exists
-                context = {'form': form, 'toppings': Topping.objects.all(), 'error_message': 'Topping already exists!'}
-                return render(request, 'owner_dashboard.html', context)
+                error_message = "This topping already exists!"
             else:
                 form.save()
                 return redirect('owner_dashboard')
+        else:
+            error_message = "This topping already exists!"
     else:
         form = ToppingForm()
 
     toppings = Topping.objects.all()
 
-    return render(request, 'owner_dashboard.html', {'toppings': toppings, 'form': form})
+    return render(request, 'owner_dashboard.html', {'toppings': toppings, 'form': form,
+                                                    'error_message': error_message})
 
 
 def topping_list(request):
@@ -33,14 +35,24 @@ def topping_list(request):
 
 
 def add_topping(request):
+    error_message = None
     if request.method == 'POST':
         form = ToppingForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('topping_list')
+            name = form.cleaned_data['name']
+            if Topping.objects.filter(name=name).exists():
+                error_message = "This topping already exists!"
+            else:
+                form.save()
+                return redirect('topping_list')
+        else:
+            error_message = "This topping already exists!"
     else:
         form = ToppingForm()
-    return render(request, 'owner_dashboard.html', {'form': form})
+
+    toppings = Topping.objects.all()
+
+    return render(request, 'owner_dashboard.html', {'form': form, 'toppings': toppings, 'error_message': error_message})
 
 
 def delete_topping(request, topping_id):

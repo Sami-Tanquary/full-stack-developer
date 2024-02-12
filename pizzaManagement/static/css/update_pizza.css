@@ -1,0 +1,28 @@
+/* Update Pizza CSS */
+    body {
+        background-color: #f8f9fa; /* Light gray background */
+    }
+
+    .navbar {
+        background-color: #111B27; /* Dark Blue */
+        padding-top: 1px; /* Reduce space above navbar */
+        padding-bottom: 1px; /* Reduce space below navbar */
+    }
+
+    .navbar-brand {
+        color: #fff; /* White text */
+    }
+
+    .navbar-brand:hover {
+        color: #fff; /* White text on hover */
+    }
+
+    .container {
+        margin-top: 50px; /* Add some top margin */
+        padding-top: 75px; /* Adjust padding between navbar and content */
+    }
+
+    .card {
+        padding: 20px; /* Add padding to the card */
+    }
+
