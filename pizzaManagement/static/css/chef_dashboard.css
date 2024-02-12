@@ -1,0 +1,104 @@
+/* Chef Dashboard CSS */
+
+    body {
+        background-color: #f8f9fa; /* Light gray background */
+    }
+
+    .navbar {
+        background-color: #111B27; /* Dark Blue */
+        padding-top: 1px; /* Reduce space above navbar */
+        padding-bottom: 1px; /* Reduce space below navbar */
+    }
+
+    .navbar-brand {
+        color: #fff; /* White text */
+    }
+
+    .navbar-brand:hover {
+        color: #fff; /* White text on hover */
+    }
+
+    .container {
+        margin-top: 50px; /* Add some top margin */
+    }
+
+
+    /* Card styling for pizzas */
+    .pizza-card {
+        background-color: #ffffff; /* White background */
+        border: 1px solid #dee2e6; /* Light gray border */
+        border-radius: 10px; /* Rounded corners */
+        margin-bottom: 20px; /* Bottom margin */
+    }
+
+    .pizza-card-header {
+        background-color: #FFDAB9; /* Light red background */
+        border-bottom: 1px solid #dee2e6; /* Light gray border */
+        padding: 10px; /* Padding */
+    }
+
+    .pizza-card-body {
+        padding: 20px; /* Padding inside the card */
+    }
+
+    /* Button styling */
+    .update-btn,
+    .submit-update,
+    .delete-btn {
+        font-size: 14px; /* Smaller font size */
+        padding: 5px 10px; /* Padding */
+        margin-right: 5px; /* Right margin */
+        border-radius: 5px; /* Rounded corners */
+    }
+
+    .update-btn {
+        background-color: #cfe7cf; /* Light pastel green */
+        border-color: #cfe7cf; /* Light pastel green */
+        color: #212529; /* Dark gray */
+    }
+
+    .update-btn:hover {
+        background-color: #4CAF50; /* Darker green */
+    }
+
+    .delete-btn {
+        background-color: #f8d7da; /* Light pastel red */
+        border-color: #f8d7da; /* Light pastel red */
+        color: #212529; /* Dark gray */
+    }
+
+    .delete-btn:hover {
+        background-color: #f44336; /* Darker red */
+    }
+
+    /* Create pizza form styling */
+    .create-pizza-form-container {
+        margin-top: 30px; /* Top margin */
+    }
+
+    .create-pizza-form {
+        max-width: 500px; /* Set maximum width */
+        margin: auto; /* Center the form */
+    }
+
+    /* Toppings list styling */
+    .toppings-title {
+        margin-bottom: 10px; /* Add space below the toppings title */
+    }
+
+        /* Center the pizza name */
+    .card-title {
+        text-align: center;
+    }
+
+    /* Make the toppings title bold */
+    .toppings-title strong {
+        font-weight: bold;
+    }
+
+    /* Display buttons inline and add space between them */
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
