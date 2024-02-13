@@ -89,6 +89,10 @@ To run tests for the Pizza Management System locally, use the following commands
   python manage.py test Owner
   ```
   These commands will execute all the tests within the respective Chef and Owner apps in the project and display the results in the terminal.
+
+## Access Remote Application
+http://52.14.211.46:8000/
+- Hosted with AWS Free Tier EC2 Instance
   
 ## Author
 This project was created by **Sami Tanquary**. It is intended for use by **StrongMind** as a part of the Full Stack Developer technical interview.
