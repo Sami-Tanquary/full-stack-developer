@@ -25,7 +25,7 @@ def chef_dashboard(request):
             # Extract the name of the pizza from the form data
             name = form.cleaned_data['name']
             # If duplicate, set error message
-            if Pizza.objects.filter(name=name).exists():
+            if Pizza.objects.filter(name__iexact=name).exists():
                 error_message = "A pizza with this name already exists!"
             # Else, save form and redirect to chef dashboard
             else:
@@ -50,6 +50,7 @@ def chef_dashboard(request):
 # Description: Handles the creation of a new pizza. Validates form input, checks for duplicate pizza names,
 #              and saves the new pizza if it does not already exist.
 # Returns: HttpResponse
+@chef_required
 def create_pizza(request):
     # Initialize error message to None
     error_message = None
@@ -62,7 +63,7 @@ def create_pizza(request):
             # Get cleaned name from form
             name = form.clean_name()
             # Check if pizza name already exists
-            if Pizza.objects.filter(name=name).exists():
+            if Pizza.objects.filter(name__iexact=name).exists():
                 # Set error message if pizza name already exists
                 error_message = "A pizza with this name already exists!"
             else:
@@ -71,7 +72,7 @@ def create_pizza(request):
                 return redirect('chef_dashboard')
         else:
             # Set error message if form is invalid
-            error_message = "Invalid form data"
+            error_message = "A pizza with this name already exists!"
     else:
         # If not a POST request, initialize an empty form
         form = PizzaForm()
@@ -89,6 +90,7 @@ def create_pizza(request):
 # Parameters: request (HttpRequest), pizza_id (int)
 # Description: Deletes a pizza with the given pizza_id.
 # Returns: HttpResponse
+@chef_required
 def delete_pizza(request, pizza_id):
     # Get the pizza object with the given pizza_id or return a 404 error if not found
     pizza = get_object_or_404(Pizza, pk=pizza_id)
@@ -102,6 +104,7 @@ def delete_pizza(request, pizza_id):
 # Parameters: request (HttpRequest), pizza_id (int)
 # Description: Allows the Chef to update an existing pizza with the given pizza_id.
 # Returns: HttpResponse
+@chef_required
 def update_pizza(request, pizza_id):
     # Get the pizza object with the given pizza_id or return a 404 error if not found
     pizza = get_object_or_404(Pizza, pk=pizza_id)

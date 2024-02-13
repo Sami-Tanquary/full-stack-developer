@@ -23,7 +23,7 @@ def owner_dashboard(request):
             # Check if topping name is duplicate
             name = form.cleaned_data['name']
             # If duplicate, set error message
-            if Topping.objects.filter(name=name).exists():
+            if Topping.objects.filter(name__iexact=name).exists():
                 error_message = "This topping already exists!"
             # Else, save form and redirect back to owner dashboard
             else:
@@ -48,6 +48,7 @@ def owner_dashboard(request):
 # Parameters: request (HttpRequest)
 # Description: Renders a list of toppings ordered alphabetically by name.
 # Returns: HttpResponse
+@owner_required
 def topping_list(request):
     # Order toppings alphabetically by name
     toppings = Topping.objects.order_by('name')
@@ -62,6 +63,7 @@ def topping_list(request):
 #              it saves the topping and redirects to the topping list page,
 #              otherwise, it displays an error message.
 # Returns: HttpResponse
+@owner_required
 def add_topping(request):
     # Initialize error_message as None
     error_message = None
@@ -74,7 +76,7 @@ def add_topping(request):
             # Extract the name of the topping from the form data
             name = form.cleaned_data['name']
             # Check if a topping with the same name already exists
-            if Topping.objects.filter(name=name).exists():
+            if Topping.objects.filter(name__iexact=name).exists():
                 # Set error_message if the topping already exists
                 error_message = "This topping already exists!"
             else:
@@ -102,6 +104,7 @@ def add_topping(request):
 #              redirects to the topping list page. Otherwise, it renders
 #              the owner dashboard with information about the topping.
 # Returns: HttpResponse
+@owner_required
 def delete_topping(request, topping_id):
     # Retrieve the topping object with the given topping_id or return a 404 error
     topping = get_object_or_404(Topping, pk=topping_id)
@@ -122,6 +125,7 @@ def delete_topping(request, topping_id):
 #              topping list page. Otherwise, it renders the owner
 #              dashboard with the topping update form.
 # Returns: HttpResponse
+@owner_required
 def update_topping(request, topping_id):
     # Retrieve the topping object with the given topping_id or return a 404 error
     topping = get_object_or_404(Topping, pk=topping_id)
