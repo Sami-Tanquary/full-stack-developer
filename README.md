@@ -102,7 +102,11 @@ Supreme Slices Management Dashboard
 
 ## Technical Choices
 ### Overview
-The application was built using Django, a high-level Python web framework, due to its robust features, built-in security mechanisms, and rapid development capabilities. For the front end, Bootstrap was chosen for its simplicity and ease of use in creating responsive web interfaces. The application follows the 3-tier Model-View-Template (MVT) architecture pattern provided by Django, which promotes code organization and separation of concerns. It utilizes Django's built-in authentication system for user management and authorization as well as the built-in Database Management System. 
+The application was built using Django, a high-level Python web framework, due to its robust features, built-in security mechanisms, and rapid development capabilities. For the front end, Bootstrap was chosen for its simplicity and ease of use in creating responsive web interfaces. The application follows the 3-tier Model-View-Template (MVT) architecture pattern provided by Django, which promotes code organization and separation of concerns. It utilizes Django's built-in authentication system for user management and authorization as well as the built-in Database Management System.
+
+### Languages
+- Python
+- HTML, CSS, Javascript
 
 ### Database Management
 Django supports multiple database backends, including SQLite, PostgreSQL, MySQL, and Oracle. For this project, SQLite was chosen as the default database during development due to its simplicity and ease of setup. As per the requirements, the data storage solution uses a server-side database to maintain state.
