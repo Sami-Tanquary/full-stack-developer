@@ -30,6 +30,7 @@ As a pizza chef, I should be able to create new pizza masterpieces.
 - [Usage](#usage)
 - [Login Information](#login-information)
 - [Running Tests](#running-tests)
+- [Access Remote Application](#access-remote-application)
 - [Author](#author)
 - [License](#license)
 
@@ -55,7 +56,10 @@ To install the Pizza Management System locally, follow these steps:
 5. Install the project dependencies:
    ```bash
    pip install -r requirements.txt
-6. Apply the database migrations:
+6. Make any new database migrations:
+   ```bash
+   python manage.py makemigrations
+7. Apply the database migrations:
    ```bash
    python manage.py migrate
 
@@ -91,7 +95,8 @@ To run tests for the Pizza Management System locally, use the following commands
   These commands will execute all the tests within the respective Chef and Owner apps in the project and display the results in the terminal.
 
 ## Access Remote Application
-http://52.14.211.46:8000/
+Supreme Slices Management Dashboard
+- http://52.14.211.46:8000/
 - Hosted with AWS Free Tier EC2 Instance
   
 ## Author
