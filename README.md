@@ -98,7 +98,7 @@ To run tests for the Pizza Management System locally, use the following commands
 ## Access Remote Application
 Supreme Slices Management Dashboard
 - http://52.14.211.46:8000/
-- Hosted with AWS Free Tier EC2 Instance
+- Hosted with AWS EC2 Free Tier
 
 ## Technical Choices
 ### Overview
