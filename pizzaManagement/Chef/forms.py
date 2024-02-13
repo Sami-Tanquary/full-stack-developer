@@ -24,10 +24,13 @@ class PizzaForm(forms.ModelForm):
     def clean_name(self):
         # Get the cleaned pizza name from form data
         name = self.cleaned_data.get('name')
+        if name:
+            # Strip leading and trailing whitespaces from the name field
+            name = name.strip()
         # Get the instance of the form (if any)
         instance = getattr(self, 'instance', None)
         # Check if an instance exists and if a pizza with the same name already exists (excluding the current instance)
-        if instance and Pizza.objects.exclude(pk=instance.pk).filter(name=name).exists():
+        if instance and Pizza.objects.exclude(pk=instance.pk).filter(name__iexact=name).exists():
             # Raise a ValidationError if a pizza with the same name already exists
             raise forms.ValidationError("A pizza with this name already exists.")
         # Return the cleaned pizza name if it's unique
