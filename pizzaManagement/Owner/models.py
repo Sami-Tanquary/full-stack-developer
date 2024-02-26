@@ -32,12 +32,36 @@ class Topping(models.Model):
                 raise ValidationError("Topping name cannot be empty.")
 
 
+# Class: Crust
+# Description: Model representing a crust for a pizza.
+class Crust(models.Model):
+    # Name of the crust, should be unique
+    name = models.CharField(max_length=100, unique=True, blank=False, null=False, db_index=True)
+
+    class Meta:
+        ordering = [Lower('name')]  # Case-insensitive ordering
+
+    def __str__(self):
+        # Returns the name of the crust
+        return self.name
+
+    def clean(self):
+        # Check if the name is not None
+        if self.name:
+            # Strip leading and trailing whitespace from the crust name
+            self.name = self.name.strip()
+            # Check if the crust name is empty after stripping whitespace
+            if not self.name:
+                raise ValidationError("Crust name cannot be empty.")
+
+
 # Class: Pizza
 # Description: Model representing a pizza which includes toppings.
 class Pizza(models.Model):
     # Name of the pizza, should be unique
     name = models.CharField(max_length=100, unique=True, blank=False, null=False, db_index=True)
     toppings = models.ManyToManyField(Topping)  # Many-to-many relationship with Topping model
+    crust = models.ForeignKey(Crust, on_delete=models.CASCADE, null=True, blank=True)  # One-to-many relationship with Crust model
 
     class Meta:
         ordering = [Lower('name')]  # Case-insensitive ordering
@@ -54,3 +78,4 @@ class Pizza(models.Model):
             # Check if the pizza name is empty after stripping whitespace
             if not self.name:
                 raise ValidationError("Pizza name cannot be empty.")
+
