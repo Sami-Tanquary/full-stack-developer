@@ -12,7 +12,7 @@ class PizzaForm(forms.ModelForm):
         # Use the Pizza model
         model = Pizza
         # Specify the fields to include in the form (name, toppings)
-        fields = ['name', 'toppings']
+        fields = ['name', 'toppings', 'crust']
         widgets = {
             'toppings': forms.CheckboxSelectMultiple # Use checkboxes for selecting toppings
         }

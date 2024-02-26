@@ -66,7 +66,16 @@
                             </div>
                             {% endfor %}
                         </div>
-
+                         <!-- Radio buttons for selecting crust -->
+                        <div class="mb-3">
+                            <label class="form-label">Select Crust:</label><br>
+                            {% for crust in all_crusts %}
+                            <div class="form-check-inline">
+                                <input class="form-check-input" type="radio" name="crust" id="crust-{{ crust.id }}" value="{{ crust.id }}" required {% if crust == selected_crust %} checked {% endif %}>
+                                <label class="form-check-label" for="crust-{{ crust.id }}">{{ crust.name }}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
                         <div class="button-container mt-4 d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary me-2">Update Pizza</button>
                             <a href="{% url 'chef_dashboard' %}" class="btn btn-danger">Cancel</a>

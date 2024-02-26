@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from Owner.models import Topping, Pizza
+from Owner.models import Topping, Pizza, Crust
 from .forms import PizzaForm
 from django.contrib.auth.decorators import login_required
 from .decorators import chef_required
@@ -39,9 +39,12 @@ def chef_dashboard(request):
     pizzas = Pizza.objects.all()
     # Order toppings by name alphabetically
     toppings = Topping.objects.order_by('name')
+    # Order crusts by name alphabetically
+    crusts = Crust.objects.order_by('name')
 
     # Render the request to chef_dashboard with all context {pizzas, form, toppings, any errors}
     return render(request, 'chef_dashboard.html', {'pizzas': pizzas, 'form': form, 'all_toppings': toppings,
+                                                   'all_crusts': crusts,
                                                    'error_message': error_message})
 
 
@@ -112,6 +115,10 @@ def update_pizza(request, pizza_id):
     available_toppings = Topping.objects.order_by('name')
     # Get the toppings selected for the pizza
     selected_toppings = pizza.toppings.all()
+    #Get the selected crust for the pizza
+    selected_crust = pizza.crust
+    # Get all crusts ordered by name alphabetically
+    all_crusts = Crust.objects.order_by('name')
 
     # Check if HTTP request method is POST
     if request.method == 'POST':
@@ -132,6 +139,8 @@ def update_pizza(request, pizza_id):
         'form': form,
         'available_toppings': available_toppings,
         'selected_toppings': selected_toppings,
+        'selected_crust': selected_crust,
+        'all_crusts': all_crusts,
     }
     # Render the update_pizza.html template with the context
     return render(request, 'update_pizza.html', context)
